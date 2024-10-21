@@ -25,7 +25,7 @@ You know how we have made reference to the interconnectedness of interactivity a
 
 
 ## Graduation Album Cover:  
-![image description](Graduation.png)
+![image description](Poster.jpg)
 
 
 ## Graduation Album Sketch:  
