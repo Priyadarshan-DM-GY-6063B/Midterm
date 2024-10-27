@@ -1,59 +1,47 @@
 let fallingChars = [];
-let nameString = 'THE MATRIX'; // Your name
 let gravity = 0.1;
-let startFalling = false; // Flag to control when to start falling
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  textSize(32);
+  textSize(24);
   textAlign(CENTER);
-  
-  // Create falling character instances for each letter in your name
-  for (let i = 0; i < nameString.length; i++) {
-    fallingChars.push(new FallingChar(random(width), 0, nameString.charAt(i)));
+  fill(0, 255, 0); // Default green
+
+  // Generate a set of falling character instances
+  for (let i = 0; i < 100; i++) {
+    fallingChars.push(new FallingChar(random(width), random(-500, 0)));
   }
 }
 
 function draw() {
-  background(0, 150); // Dark background with some transparency for a trail effect
+  // Background fade effect for a smooth trail
+  background(0, 100);
 
-  if (!startFalling) {
-    // Display the full name at the top
-    fill(0, 255, 0); // Green color
-    text(nameString, width / 2, height / 4);
-    
-    // Start falling after a delay
-    if (frameCount > 200) { // Start falling after 60 frames (~1 second)
-      startFalling = true;
-    }
-  } else {
-    // Update and display each falling character
-    for (let char of fallingChars) {
-      char.update();
-      char.display();
-    }
+  // Update and display each falling character
+  for (let char of fallingChars) {
+    char.update();
+    char.display();
   }
 }
 
 function mouseMoved() {
-  // Control the gravity acceleration with mouse movement
-  gravity = map(mouseX, 0, width, 0.1, 5);
-}
-
-function mousePressed() {
-  // Change the color of the falling code when the mouse is clicked
-  for (let char of fallingChars) {
-    char.changeColor();
-  }
+  // Adjust gravity based on mouse position, making code fall faster as mouse moves to the right
+  gravity = map(mouseX, 0, width, 0.1, 2);
 }
 
 class FallingChar {
-  constructor(x, y, char) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.char = char; // Set the character to the provided letter from the name
     this.speed = random(2, 5);
-    this.color = color(0, 255, 0); // Default green color
+    this.baseColor = color(0, random(180, 255), 0); // Slight color variation for each
+    this.char = this.getRandomChar();
+  }
+
+  getRandomChar() {
+    // Create a random character from A-Z, 0-9, and special characters
+    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    return chars.charAt(floor(random(chars.length)));
   }
 
   update() {
@@ -64,15 +52,13 @@ class FallingChar {
     if (this.y > height) {
       this.y = random(-100, -50);
       this.x = random(width);
+      this.char = this.getRandomChar(); // Change character for variety
     }
   }
 
   display() {
-    fill(this.color);
+    // Subtle color shift for realism
+    fill(this.baseColor);
     text(this.char, this.x, this.y);
-  }
-
-  changeColor() {
-    this.color = color(random(255), random(255), random(255)); // Random color on click
   }
 }
