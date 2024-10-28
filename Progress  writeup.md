@@ -1,5 +1,5 @@
-#Milestone 2 (due: 2024/10/28)
-Pseudo-code, planning and organizing (10 points)
+# Milestone 2
+
 Continue working on the mid-term project.
 
 You should have a MidTerm repository already set up from last week’s assignment, and now you are starting to add some code to your sketch.
