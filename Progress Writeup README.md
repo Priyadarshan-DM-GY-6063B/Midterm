@@ -1,81 +1,98 @@
-# Mid-Term Project: Matrix-Inspired Poster (Milestone 2)
-
-## Progress Update
-This week, I focused on the core functionality and interactivity of the project. I implemented the main components:
-- Characters falling in randomized patterns.
-- Interactive features including gravity control via mouse movement and color change on mouse click.
-- Initial groundwork for adding unique effects and a visual twist to make the design more distinct.
-
----
-
-## Project Structure
-
-### 1. Scenes or Moments
-The project primarily features one continuous scene but with interactive moments that alter its appearance:
-1. **Title Display** - An initial static display of characters (e.g., "The Matrix") at the top.
-2. **Falling Characters** - After a short delay, the title falls into a randomized animation pattern with character paths and interactivity.
-
-### 2. Interactive Events
-- **Mouse Movement** - Controls gravity to speed up or slow down the falling characters.
-- **Mouse Click** - Triggers a temporary color change for a “hacking” effect.
-- **(Optional) Keyboard Input** - Potential to add additional effects, such as toggling different patterns or resetting the scene.
-
----
-
-### 3. Code Details
-
-**Files and Classes:**
-- **Files** - No external files required as of now.
-- **Classes and Arrays**:
-  - `fallingChars` array - Stores individual `FallingChar` objects for animation.
-  - `FallingChar` class - Defines properties (position, speed, color) and behaviors (falling, resetting) for each character.
-
----
-
-## Custom Functions
-
-**Functions and Methods:**
-1. **FallingChar Class**:
-   - `constructor(x, y)` - Sets initial position and properties for each character.
-   - `getRandomChar()` - Randomly selects a character (A-Z or 0-9) to enhance the digital effect.
-   - `update()` - Manages falling motion, gravity, and path changes.
-   - `display()` - Displays each character in the current color and position.
-   - `changeColor()` - Changes color when called, e.g., on mouse click.
-
-2. **Gravity Control (`mouseMoved`)** - Adjusts gravity according to `mouseX` position.
-
-3. **Color Change (`mousePressed`)** - Triggers `changeColor()` on all characters when the mouse is pressed.
-
-**Placeholder Functions**:
-   - **Scene Transition Function** - (Planned) If more scenes are added, a function will manage transitions between them.
-
----
-
-## Pseudo-Code (Logic Flow)
-
-1. **Setup**:
-   - Set up canvas size, text properties, and generate an initial set of falling characters.
-   - Populate `fallingChars` with `FallingChar` instances at randomized positions.
-
-2. **Draw Loop**:
-   - Draw background with partial transparency to create a trail effect.
-   - Display title if in initial display mode.
-   - Begin falling animation after a short delay or trigger.
-   - For each `FallingChar` in `fallingChars`:
-     - Update position and apply gravity.
-     - Display the character with current properties.
-   - Apply gravity control based on `mouseMoved()`, and color change on `mousePressed()`.
-
-3. **Interactions**:
-   - **mouseMoved()** - Adjusts gravity for falling characters.
-   - **mousePressed()** - Calls `changeColor()` to alter the color temporarily.
-
----
-
-This milestone showcases the foundational code and logic to guide the final design and interactive effects. I’m exploring further ideas to make the design more unique while aligning with the feedback received.
+# Progress Writeup
 
 
-# MileStone 1
+
+# Milestone 2 
+
+## What I’ve done this week
+In this milestone, I have continued developing my p5.js sketch for this project. I focused on creating a visually unique representation of the falling code, introducing random characters based on your feedback for my milestone 1 I'm trying to make it a raining effect for characters I've been working on it and allowing for interactive manipulation through mouse.
+
+- Expanded on the existing falling code project by implementing a class for falling characters.
+- Added interactivity using mouse movement and clicks to control the gravity and color of the characters.
+
+## Description of the files, classes, objects or arrays I will use
+- **FallingChar Class**: This class defines the properties and behaviors of each falling character, including position, speed, color, and methods for updating and displaying itself.
+- **Array of fallingChars**: An array to store multiple instances of `FallingChar` objects, which represent the falling characters on the screen.
+
+## Description of any interactivity or time-based logic
+- **Gravity Control**: The gravity of the falling characters is adjusted based on the horizontal position of the mouse.
+- **Color Change on Click**: Clicking the mouse changes the color of all falling characters to a random color.
+
+## Description of functions I have written or will write
+- `setup()`: Initializes the canvas and creates falling character instances.
+- `draw()`: Continuously updates and displays falling characters.
+- `mouseMoved()`: Adjusts the gravity of falling characters based on mouse position.
+- `mousePressed()`: Changes the color of falling characters on mouse click.
+- `addVisualEffects()`: Placeholder function for implementing future visual effects.
+- `keyPressed()`: Placeholder for keyboard interactions (e.g., changing background or pausing animation).
+
+## Project Overview
+This project visualizes falling digital code inspired by *The Matrix*. The code symbolizes the deconstructed reality within the film, featuring interactive elements that respond to user input.
+
+## Pseudo Code
+
+```plaintext
+// Initialize variables
+Initialize fallingChars as an empty array
+Set gravity to 0.1
+Set startFalling to false (indicates when characters start falling)
+Define character count (e.g., 100) for the falling characters
+
+Function setup:
+    Create canvas with window dimensions
+    Set text size and alignment
+    For each character in range (0 to character count):
+        Create new instance of FallingChar with random x-position and initial y-position
+        Add instance to fallingChars array
+
+Function draw:
+    Clear the background with a dark color and transparency for trail effect
+    If startFalling is false:
+        Display the title text in the center of the canvas
+        If frameCount exceeds threshold (e.g., 200):
+            Set startFalling to true (characters will start falling)
+    Else:
+        For each character in fallingChars:
+            Update character position based on gravity
+            Display character on canvas
+
+Function mouseMoved:
+    Map mouseX position to gravity value (control speed of falling characters)
+
+Function mousePressed:
+    For each character in fallingChars:
+        Change the color of the character randomly
+
+Class FallingChar:
+    Constructor with parameters x, y:
+        Set initial position (x, y)
+        Generate a random character
+        Set random speed for falling
+        Set initial color to green
+
+    Function getRandomChar:
+        Return a random character from the specified set (e.g., A-Z, 0-9)
+
+    Function update:
+        Apply gravity to the y-position
+        If character goes off the screen:
+            Reset position to random x and y (above the canvas)
+            Generate a new random character
+
+    Function display:
+        Set fill color for the character
+        Draw character at its position
+
+    Function changeColor:
+        Set character's color to a random color
+
+// Main execution flow
+Call setup to initialize the project
+Call draw in a loop to continuously update and render the falling characters
+```
+
+-------------------------------------------------
+# Milestone 1
 
 ## 1. What book, album or movie did you choose? What is it about?
 I chose The Matrix, which is a science fiction movie exploring the concept of reality versus simulation. The movie follows a hacker named Neo as he discovers that the world in which he lives is merely a simulated reality created by machines to subdue humanity. The movie nails its cyberpunk aesthetics. Its visuals particularly feature the green falling code representing the simulated world. 
@@ -97,7 +114,6 @@ I would like to explore the random and flowing characteristics of animation and 
 ## 5. Are there aspects of your project that are related to any of the readings we’ve done?
 
 You know how we have made reference to the interconnectedness of interactivity and real-time response in our discussions? In particular, this tie-in connects with other theory and practices we've learned about designing engaging responsive designs. For instance, the concept of interaction as a cycle-an input from the user (for example, a mouse move) leads the system to modify the behavior of the falling code-sharply reflects similar lessons that we have learned about creating engaging, responsive designs. Timely and design-sensitive move within this connectivity, especially in regard to changes that are time-based and continuous, and how they might affect the perception and experience of a viewer. 
-
 
 
 
