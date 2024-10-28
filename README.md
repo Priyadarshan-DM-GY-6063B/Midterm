@@ -4,21 +4,21 @@
 
 # Milestone 2 
 
-## What I’ve done this week
+## What I’ve done this week:
 In this milestone, I have continued developing my p5.js sketch for this project. I focused on creating a visually unique representation of the falling code, introducing random characters based on your feedback for my milestone 1 I'm trying to make it a raining effect for characters I've been working on it and allowing for interactive manipulation through mouse.
 
 - Expanded on the existing falling code project by implementing a class for falling characters.
 - Added interactivity using mouse movement and clicks to control the gravity and color of the characters.
 
-## Description of the files, classes, objects or arrays I will use
+## Description of the files, classes, objects or arrays I will use:
 - **FallingChar Class**: This class defines the properties and behaviors of each falling character, including position, speed, color, and methods for updating and displaying itself.
 - **Array of fallingChars**: An array to store multiple instances of `FallingChar` objects, which represent the falling characters on the screen.
 
-## Description of any interactivity or time-based logic
+## Description of any interactivity or time-based logic:
 - **Gravity Control**: The gravity of the falling characters is adjusted based on the horizontal position of the mouse.
 - **Color Change on Click**: Clicking the mouse changes the color of all falling characters to a random color.
 
-## Description of functions I have written or will write
+## Description of functions I have written or will write:
 - `setup()`: Initializes the canvas and creates falling character instances.
 - `draw()`: Continuously updates and displays falling characters.
 - `mouseMoved()`: Adjusts the gravity of falling characters based on mouse position.
@@ -26,10 +26,10 @@ In this milestone, I have continued developing my p5.js sketch for this project.
 - `addVisualEffects()`: Placeholder function for implementing future visual effects.
 - `keyPressed()`: Placeholder for keyboard interactions (e.g., changing background or pausing animation).
 
-## Project Overview
+## Project Overview:
 This project visualizes falling digital code inspired by *The Matrix*. The code symbolizes the deconstructed reality within the film, featuring interactive elements that respond to user input.
 
-## Pseudo Code
+## Pseudo Code:-
 
 ```plaintext
 // Initialize variables
