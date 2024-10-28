@@ -1,4 +1,4 @@
-Milestone 2 (due: 2024/10/28)
+#Milestone 2 (due: 2024/10/28)
 Pseudo-code, planning and organizing (10 points)
 Continue working on the mid-term project.
 
