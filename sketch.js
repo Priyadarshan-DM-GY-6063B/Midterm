@@ -3,44 +3,53 @@ let gravity = 0.1;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  textSize(24);
-  textAlign(CENTER);
-  fill(0, 255, 0); // Default green
+  textSize(25); //size of the text
+  textAlign(BOTTOM);
 
-  // Generate a set of falling character instances
-  for (let i = 0; i < 100; i++) {
+  // Generates a grid of falling characters across the screen
+  for (let i = 0; i < 100; i++) { // this helps to how many characters should fall in the screen
     fallingChars.push(new FallingChar(random(width), random(-500, 0)));
   }
 }
 
 function draw() {
-  // Background fade effect for a smooth trail
-  background(0, 100);
+  background(0, 150); // Black background with some transparency for a trail effect
 
-  // Update and display each falling character
+  // Start falling characters
   for (let char of fallingChars) {
     char.update();
     char.display();
   }
+
+  // Placeholder for future effects or animations
+  // TODO: Add code for additional visual effects here
 }
 
+// Control the gravity acceleration with mouse movement
 function mouseMoved() {
-  // Adjust gravity based on mouse position, making code fall faster as mouse moves to the right
-  gravity = map(mouseX, 0, width, 0.1, 2);
+  gravity = map(mouseX, 0, width, 0.1, 5);
 }
 
+// Change the color of the falling code when the mouse is clicked
+function mousePressed() {
+  for (let char of fallingChars) {
+    char.changeColor();
+  }
+}
+
+// Class definition for falling characters
 class FallingChar {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.char = this.getRandomChar(); // Generates a random character
     this.speed = random(2, 5);
-    this.baseColor = color(0, random(180, 255), 0); // Slight color variation for each
-    this.char = this.getRandomChar();
+    this.color = color(0, 255 , 0); // green color
   }
 
   getRandomChar() {
-    // Create a random character from A-Z, 0-9, and special characters
-    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    // Get a random character from A-Z or 0-9
+    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     return chars.charAt(floor(random(chars.length)));
   }
 
@@ -52,13 +61,23 @@ class FallingChar {
     if (this.y > height) {
       this.y = random(-100, -50);
       this.x = random(width);
-      this.char = this.getRandomChar(); // Change character for variety
+      this.char = this.getRandomChar(); // Change character upon reset for variety
     }
   }
 
   display() {
-    // Subtle color shift for realism
-    fill(this.baseColor);
+    fill(this.color);
     text(this.char, this.x, this.y);
   }
+
+  changeColor() {
+    this.color = color(random(255), random(255), random(255)); // Random color on click
+  }
 }
+
+// Placeholder function for future enhancements
+function addVisualEffects() {
+  // TODO: Implement new visual effects or transformations on the falling characters
+}
+
+
