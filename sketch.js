@@ -49,7 +49,7 @@ class FallingChar {
 
   getRandomChar() {
     // Get a random character from A-Z or 0-9
-    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345678";
     return chars.charAt(floor(random(chars.length)));
   }
 
