@@ -1,7 +1,7 @@
 # Milestone 3
 
 ### What I’ve Done This Week
-This week, I focused on enhancing the visual and interactive aspects of the falling characters project based on previous milestone feedback Key achievements include:
+This week, I focused on enhancing the visual and interactive aspects of the falling characters project based on previous milestone feedback:
 
 - **Implementing a Color Palette**: Implemented a consistent color palette featuring various shades of Matrix green, giving the characters a more consistent look rather than random colors.
 - **Adding Pattern Formation**: Enabled characters to form a circular pattern when the mouse is clicked, also when we go from left to right the speed of the falling characters increases enhancing interactivity and user engagement.
