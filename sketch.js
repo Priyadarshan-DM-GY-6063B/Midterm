@@ -1,42 +1,57 @@
+let columns = [];
 let fallingChars = [];
+let colorPalette = [];
 let gravity = 0.1;
-let colorPalette = []; // Array to store green colors
-let radius = 100; // Radius for the circle
-let currentPatternChars = []; // Array to store the current pattern characters
+let radius = 200;
+let currentPatternChars = [];
+let charSize = 20;
+let columnSpacing = 20; // Slightly increased spacing for better performance
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  textSize(25);
-  textAlign(CENTER, BOTTOM);
+  textSize(charSize);
+  textAlign(CENTER, CENTER);
+  frameRate(60); // frame rate to make animations smoother
 
   // Initialize the color palette with shades of green
   colorPalette = [
     color(0, 255, 0),   // Bright green
     color(0, 200, 0),   // Medium green
     color(0, 150, 0),   // Dark green
-    color(0, 255, 100),  // Light green
-    color(50, 255, 50)   // Lighter green
+    color(0, 255, 100), // Light green
+    color(50, 255, 50)  // Lighter green
   ];
 
-  // Generate falling characters with colors from the palette
-  for (let i = 0; i < 100; i++) {
+  // Initialize columns of characters for Matrix rain effect
+  for (let x = 0; x < width; x += columnSpacing) {
+    columns.push(createColumn(x));
+  }
+  
+ 
+  for (let i = 0; i < 50; i++) { // Reduced number of falling chars for smoother performance
     fallingChars.push({
       x: random(width),
       y: random(-800, 0),
       speed: random(2, 5),
-      color: random(colorPalette), // Choose color from the green palette
+      color: random(colorPalette),
       char: getRandomChar(),
-      inPattern: false, // Whether the character is in a pattern
-      targetX: null, // Target position for forming patterns
-      targetY: null // Target position for forming patterns
+      inPattern: false,
+      targetX: null,
+      targetY: null
     });
   }
 }
 
 function draw() {
-  background(0, 150); // Black background with transparency
+  background(0, 180); 
 
-  // Update and display falling characters
+  // Update and display each column for Matrix rain effect
+  for (let column of columns) {
+    updateColumn(column);
+    displayColumn(column);
+  }
+
+  // Updates and display additional falling characters for patterns
   for (let char of fallingChars) {
     updateFallingChar(char);
     displayChar(char);
@@ -45,63 +60,98 @@ function draw() {
 
 // Control the gravity acceleration with mouse movement
 function mouseMoved() {
-  gravity = map(mouseX, 0, width, 0.1, 5);
+  gravity = map(mouseX, 0, width, 0.1, 3); 
 }
 
 // Change the color of falling characters when the mouse is clicked
 function mousePressed() {
-  // If there are currently characters in a pattern, reset them to falling state
   if (currentPatternChars.length > 0) {
+    // Reset pattern characters to falling state
     for (let char of currentPatternChars) {
-      char.inPattern = false; // Reset character to fall normally
-      char.color = random(colorPalette); // Reset to a color from the green palette
+      char.inPattern = false;
+      char.color = random(colorPalette);
     }
-    currentPatternChars = []; // Clear the current pattern characters
+    currentPatternChars = [];
   } else {
-    formCirclePattern(); // Form a new pattern if none exists
+    formCirclePattern();
   }
 }
 
 // Function to form a circular pattern
 function formCirclePattern() {
   let centerX = width / 2;
-  let centerY = height / 2; // Center of the canvas
+  let centerY = height / 2;
 
-  
-  currentPatternChars = randomSubset(fallingChars, 20); // Choose 20 random characters for the pattern
+  currentPatternChars = randomSubset(fallingChars, 30); // Reduced number for performance
 
   for (let i = 0; i < currentPatternChars.length; i++) {
     let char = currentPatternChars[i];
-    let angle = map(i, 0, currentPatternChars.length, 0, TWO_PI); // Calculate angle for each character
-    char.targetX = centerX + cos(angle) * radius; // Calculate X position
-    char.targetY = centerY + sin(angle) * radius; // Calculate Y position
-    char.inPattern = true; // Mark as being in pattern
-    char.color = color(255); // Set color to white for the circular pattern
+    let angle = map(i, 0, currentPatternChars.length, 0, TWO_PI);
+    char.targetX = centerX + cos(angle) * radius;
+    char.targetY = centerY + sin(angle) * radius;
+    char.inPattern = true;
+    char.color = color(255); // Set color to white for pattern
   }
 }
 
-// Function to update the position of a falling character
+// this snippet creates a new column of characters at a specific x position for Matrix rain
+function createColumn(x) {
+  let chars = [];
+  let y = random(-1000, 0);
+  for (let i = 0; i < 15; i++) { // Reduced number of characters per column
+    chars.push({
+      x: x,
+      y: y - i * charSize,
+      speed: random(2, 4),
+      color: random(colorPalette),
+      char: getRandomChar()
+    });
+  }
+  return chars;
+}
+
+// Update characters in a column to create a continuous falling effect
+function updateColumn(column) {
+  for (let char of column) {
+    char.y += char.speed * gravity; // Apply gravity to all characters in the column
+
+    if (char.y > height) {
+      char.y = -charSize * column.length;
+      char.char = getRandomChar();
+      char.color = random(colorPalette);
+    }
+  }
+}
+
+// Display each character with a fading trail effect for Matrix rain
+function displayColumn(column) {
+  for (let i = 0; i < column.length; i++) {
+    let char = column[i];
+    let alpha = map(i, 0, column.length, 255, 100); 
+    fill(char.color.levels[0], char.color.levels[1], char.color.levels[2], alpha);
+    text(char.char, char.x, char.y);
+  }
+}
+
+// Updates the position of a falling character
 function updateFallingChar(char) {
-  // Update position based on whether in a pattern or falling normally
   if (char.inPattern) {
     // Move towards the target position for the pattern
     char.x = lerp(char.x, char.targetX, 0.1);
     char.y = lerp(char.y, char.targetY, 0.1);
   } else {
-    // Regular falling behavior
-    char.y += char.speed * gravity;
+    char.y += char.speed * gravity; // Apply gravity to all fallingChars
 
-    // Reset position if it goes off the bottom of the screen
     if (char.y > height) {
       char.y = random(-100, -50);
       char.x = random(width);
-      char.char = getRandomChar(); // Reset character on position reset
-      char.color = random(colorPalette); // Reset color for the new character from the palette
+      char.char = getRandomChar();
+      char.color = random(colorPalette);
     }
   }
 }
 
-// Function to display a falling character
+// Display a falling character
 function displayChar(char) {
   fill(char.color);
   text(char.char, char.x, char.y);
@@ -113,7 +163,7 @@ function getRandomChar() {
   return chars.charAt(floor(random(chars.length)));
 }
 
-// Function to get a random subset of an array this is used to reduce computational power instead using all the characters
+// Function to get a random subset of an array
 function randomSubset(array, count) {
   let subset = [];
   while (subset.length < count && array.length > subset.length) {
