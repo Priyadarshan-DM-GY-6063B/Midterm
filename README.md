@@ -21,7 +21,7 @@ Here are some visual representations of the project's key features:
    ![Falling Characters](fallingcharacters.png)
 
 2. **Circular Pattern Formation**: A screenshot showing characters forming a circle upon mouse click.
-   ![Circular Pattern](Pattern Formation.png)
+   ![Circular Pattern](Patternformation.png)
 
 
 
