@@ -60,7 +60,7 @@ function draw() {
 
 // Control the gravity acceleration with mouse movement
 function mouseMoved() {
-  gravity = map(mouseX, 0, width, 0.1, 3); 
+  gravity = map(mouseX, 0, width, 0.1, 2.5); 
 }
 
 // Change the color of falling characters when the mouse is clicked
