@@ -11,7 +11,7 @@ This week, I focused on enhancing the visual and interactive aspects of the fall
 ### Description of Final Interactivity or Time-Based Logic
 The final version of the project includes the following interactive features:
 - **Falling Characters**: Characters fall from the top of the canvas, with their speed influenced by the horizontal position of the mouse, creating a gravity effect that users can control.
-- **Circular Pattern Formation**: Upon clicking anywhere on the canvas, a selection of characters will form a circular pattern centered at the mouse location. The characters will smoothly transition to their new positions, displaying a cohesive and dynamic visual.
+- **Circular Pattern Formation**: Upon clicking anywhere on the canvas, a random characters will form a white coloured circular pattern. The characters will smoothly transition to their new positions, displaying a dynamic visual.
 - **Color Dynamics**: While falling, characters are displayed in shades of green from the defined palette, providing a visual aesthetic reminiscent of the Matrix. When forming a circle, the characters will turn white, highlighting the new pattern.
 
 ### Images, Drawings, Sketches
