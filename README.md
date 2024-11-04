@@ -1,7 +1,7 @@
 # Milestone 3
 
 ### What I’ve Done This Week
-This week, I focused on enhancing the visual and interactive aspects of the falling characters project based on previous milestone feedback Key achievements include:
+This week, I focused on enhancing the visual and interactive aspects of the falling characters project based on previous milestone feedback:
 
 - **Implementing a Color Palette**: Implemented a consistent color palette featuring various shades of Matrix green, giving the characters a more consistent look rather than random colors.
 - **Adding Pattern Formation**: Enabled characters to form a circular pattern when the mouse is clicked, also when we go from left to right the speed of the falling characters increases enhancing interactivity and user engagement.
@@ -11,17 +11,17 @@ This week, I focused on enhancing the visual and interactive aspects of the fall
 ### Description of Final Interactivity or Time-Based Logic
 The final version of the project includes the following interactive features:
 - **Falling Characters**: Characters fall from the top of the canvas, with their speed influenced by the horizontal position of the mouse, creating a gravity effect that users can control.
-- **Circular Pattern Formation**: Upon clicking anywhere on the canvas, a selection of characters will form a circular pattern centered at the mouse location. The characters will smoothly transition to their new positions, displaying a cohesive and dynamic visual.
+- **Circular Pattern Formation**: Upon clicking anywhere on the canvas, a random characters will form a white coloured circular pattern. The characters will smoothly transition to their new positions, displaying a dynamic visual.
 - **Color Dynamics**: While falling, characters are displayed in shades of green from the defined palette, providing a visual aesthetic reminiscent of the Matrix. When forming a circle, the characters will turn white, highlighting the new pattern.
 
 ### Images, Drawings, Sketches
 Here are some visual representations of the project's key features:
 
 1. **Falling Characters**: A screenshot of the canvas with characters falling in shades of green.
-   ![Falling Characters](link_to_your_image)
+   ![Falling Characters](fallingcharacters.png)
 
 2. **Circular Pattern Formation**: A screenshot showing characters forming a circle upon mouse click.
-   ![Circular Pattern](link_to_your_image)
+   ![Circular Pattern](Patternformation.png)
 
 
 
