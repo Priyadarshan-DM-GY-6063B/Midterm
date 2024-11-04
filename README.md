@@ -18,10 +18,10 @@ The final version of the project includes the following interactive features:
 Here are some visual representations of the project's key features:
 
 1. **Falling Characters**: A screenshot of the canvas with characters falling in shades of green.
-   ![Falling Characters](link_to_your_image)
+   ![Falling Characters](fallingcharacters.png)
 
 2. **Circular Pattern Formation**: A screenshot showing characters forming a circle upon mouse click.
-   ![Circular Pattern](link_to_your_image)
+   ![Circular Pattern](Pattern Formation.png)
 
 
 
