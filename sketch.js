@@ -1,28 +1,46 @@
 let fallingChars = [];
 let gravity = 0.1;
+let colorPalette = []; // Array to store green colors
+let radius = 100; // Radius for the circle
+let currentPatternChars = []; // Array to store the current pattern characters
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  textSize(25); //size of the text
-  textAlign(BOTTOM);
+  textSize(25);
+  textAlign(CENTER, BOTTOM);
 
-  // Generates a grid of falling characters across the screen
-  for (let i = 0; i < 100; i++) { // this helps to how many characters should fall in the screen
-    fallingChars.push(new FallingChar(random(width), random(-500, 0)));
+  // Initialize the color palette with shades of green
+  colorPalette = [
+    color(0, 255, 0),   // Bright green
+    color(0, 200, 0),   // Medium green
+    color(0, 150, 0),   // Dark green
+    color(0, 255, 100),  // Light green
+    color(50, 255, 50)   // Lighter green
+  ];
+
+  // Generate falling characters with colors from the palette
+  for (let i = 0; i < 100; i++) {
+    fallingChars.push({
+      x: random(width),
+      y: random(-800, 0),
+      speed: random(2, 5),
+      color: random(colorPalette), // Choose color from the green palette
+      char: getRandomChar(),
+      inPattern: false, // Whether the character is in a pattern
+      targetX: null, // Target position for forming patterns
+      targetY: null // Target position for forming patterns
+    });
   }
 }
 
 function draw() {
-  background(0, 150); // Black background with some transparency for a trail effect
+  background(0, 150); // Black background with transparency
 
-  // Start falling characters
+  // Update and display falling characters
   for (let char of fallingChars) {
-    char.update();
-    char.display();
+    updateFallingChar(char);
+    displayChar(char);
   }
-
-  // Placeholder for future effects or animations
-  // TODO: Add code for additional visual effects here
 }
 
 // Control the gravity acceleration with mouse movement
@@ -30,54 +48,78 @@ function mouseMoved() {
   gravity = map(mouseX, 0, width, 0.1, 5);
 }
 
-// Change the color of the falling code when the mouse is clicked
+// Change the color of falling characters when the mouse is clicked
 function mousePressed() {
-  for (let char of fallingChars) {
-    char.changeColor();
+  // If there are currently characters in a pattern, reset them to falling state
+  if (currentPatternChars.length > 0) {
+    for (let char of currentPatternChars) {
+      char.inPattern = false; // Reset character to fall normally
+      char.color = random(colorPalette); // Reset to a color from the green palette
+    }
+    currentPatternChars = []; // Clear the current pattern characters
+  } else {
+    formCirclePattern(); // Form a new pattern if none exists
   }
 }
 
-// Class definition for falling characters
-class FallingChar {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.char = this.getRandomChar(); // Generates a random character
-    this.speed = random(2, 5);
-    this.color = color(0, 255 , 0); // green color
-  }
+// Function to form a circular pattern
+function formCirclePattern() {
+  let centerX = width / 2;
+  let centerY = height / 2; // Center of the canvas
 
-  getRandomChar() {
-    // Get a random character from A-Z or 0-9
-    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345678";
-    return chars.charAt(floor(random(chars.length)));
-  }
+  
+  currentPatternChars = randomSubset(fallingChars, 20); // Choose 20 random characters for the pattern
 
-  update() {
-    // Apply gravity
-    this.y += this.speed * gravity;
+  for (let i = 0; i < currentPatternChars.length; i++) {
+    let char = currentPatternChars[i];
+    let angle = map(i, 0, currentPatternChars.length, 0, TWO_PI); // Calculate angle for each character
+    char.targetX = centerX + cos(angle) * radius; // Calculate X position
+    char.targetY = centerY + sin(angle) * radius; // Calculate Y position
+    char.inPattern = true; // Mark as being in pattern
+    char.color = color(255); // Set color to white for the circular pattern
+  }
+}
+
+// Function to update the position of a falling character
+function updateFallingChar(char) {
+  // Update position based on whether in a pattern or falling normally
+  if (char.inPattern) {
+    // Move towards the target position for the pattern
+    char.x = lerp(char.x, char.targetX, 0.1);
+    char.y = lerp(char.y, char.targetY, 0.1);
+  } else {
+    // Regular falling behavior
+    char.y += char.speed * gravity;
 
     // Reset position if it goes off the bottom of the screen
-    if (this.y > height) {
-      this.y = random(-100, -50);
-      this.x = random(width);
-      this.char = this.getRandomChar(); // Change character upon reset for variety
+    if (char.y > height) {
+      char.y = random(-100, -50);
+      char.x = random(width);
+      char.char = getRandomChar(); // Reset character on position reset
+      char.color = random(colorPalette); // Reset color for the new character from the palette
     }
   }
-
-  display() {
-    fill(this.color);
-    text(this.char, this.x, this.y);
-  }
-
-  changeColor() {
-    this.color = color(random(255), random(255), random(255)); // Random color on click
-  }
 }
 
-// Placeholder function for future enhancements
-function addVisualEffects() {
-  // TODO: Implement new visual effects or transformations on the falling characters
+// Function to display a falling character
+function displayChar(char) {
+  fill(char.color);
+  text(char.char, char.x, char.y);
 }
 
+// Function to get a random character
+function getRandomChar() {
+  let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  return chars.charAt(floor(random(chars.length)));
+}
 
+// Function to get a random subset of an array this is used to reduce computational power instead using all the characters
+function randomSubset(array, count) {
+  let subset = [];
+  while (subset.length < count && array.length > subset.length) {
+    let randomIndex = floor(random(array.length));
+    let item = array[randomIndex];
+    if (!subset.includes(item)) subset.push(item);
+  }
+  return subset;
+}
