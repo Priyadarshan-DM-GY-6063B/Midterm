@@ -109,7 +109,7 @@ function displayChar(char) {
 
 // Function to get a random character
 function getRandomChar() {
-  let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345678";
+  let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   return chars.charAt(floor(random(chars.length)));
 }
 
